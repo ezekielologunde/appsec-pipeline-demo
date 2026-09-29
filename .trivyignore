@@ -1,0 +1,10 @@
+# Investigated 2026-09-30. Both findings are inside pip's own vendored
+# dependencies (pip/_vendor/...), bundled into the python:3.13-slim base
+# image itself - not application code, not directly installable/upgradable
+# via requirements.txt, and not reachable from this app's own code paths
+# (this app never imports setuptools or msgpack directly). Documented as
+# accepted risk rather than silently raising the severity threshold to hide
+# them. Re-check when the upstream python:3.13-slim base image updates its
+# bundled pip.
+CVE-2025-47273
+GHSA-6v7p-g79w-8964

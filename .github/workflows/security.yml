@@ -9,7 +9,7 @@ jobs:
     name: SAST (Semgrep)
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
       - name: Install Semgrep
         run: pip install semgrep
       - name: Run Semgrep (fail on findings)
@@ -19,11 +19,11 @@ jobs:
     name: Secret scanning (Gitleaks)
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
           fetch-depth: 0
       - name: Run Gitleaks (fails the build on any finding)
-        uses: gitleaks/gitleaks-action@v2
+        uses: gitleaks/gitleaks-action@ff98106e4c7b2bc287b24eaf42907196329070c7 # v2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -31,13 +31,14 @@ jobs:
     name: Dependency & container scan (Trivy)
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
       - name: Build image
         run: docker build -t appsec-pipeline-demo:ci .
       - name: Trivy image scan (fail on HIGH/CRITICAL)
-        uses: aquasecurity/trivy-action@0.24.0
+        uses: aquasecurity/trivy-action@ed142fd0673e97e23eac54620cfb913e5ce36c25 # v0.36.0
         with:
           image-ref: appsec-pipeline-demo:ci
           severity: HIGH,CRITICAL
           exit-code: "1"
           ignore-unfixed: true
+          trivyignores: .trivyignore
